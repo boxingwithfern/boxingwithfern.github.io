@@ -81,39 +81,6 @@
 
 	<p class="text-gray-500 text-center col-span-full">No events available. Try adding a sample event!</p>
 
-        <!-- Event Card -->
-<!--
-        <div class="col-md-4">
-          <div class="card h-100 shadow-sm">
-            <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="Event Image">
-            <div class="card-body">
-              <h5 class="card-title">Tech Conference 2025</h5>
-              <p class="card-text">
-                <strong>Date:</strong> July 15, 2025<br />
-                <strong>Location:</strong> San Francisco, CA
-              </p>
-              <a href="#" class="btn btn-primary">Get Tickets</a>
-            </div>
-          </div>
-        </div>
--->         
-        <!-- Repeat Event Card as Needed -->
-<!--
-        <div class="col-md-4">
-          <div class="card h-100 shadow-sm">
-            <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="Event Image">
-            <div class="card-body">
-              <h5 class="card-title">Live Music Night</h5>
-              <p class="card-text">
-                <strong>Date:</strong> August 2, 2025<br />
-                <strong>Location:</strong> New York, NY
-              </p>
-              <a href="#" class="btn btn-primary" onclick="navigateTo('second')">Get Tickets</a>
-            </div>
-          </div>
-        </div>
--->         
-        <!-- More events... -->
       </div>
     </div>
   </section>
@@ -150,24 +117,6 @@
             </div>
           </div>
         </div>
-
-        <!-- Repeat Event Card as Needed -->
-<!--
-        <div class="col-md-4">
-          <div class="card h-100 shadow-sm">
-            <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="Event Image">
-            <div class="card-body">
-              <h5 class="card-title">Live Music Night</h5>
-              <p class="card-text">
-                <strong>Date:</strong> August 2, 2025<br />
-                <strong>Location:</strong> New York, NY
-              </p>
-              <a href="#" class="btn btn-primary">Get Tickets</a>
-            </div>
-          </div>
-        </div>
--->
-        <!-- More events... -->
       </div>
     </div>
   </section>  
@@ -187,7 +136,7 @@
                     <p class="text-xl font-semibold text-gray-800">Total: <span id="cartTotal" class="text-purple-600">$0.00</span></p>
                   </div>                
                   <div class="col-md-6">
-                    <button id="proceedToCheckoutButton" class="btn btn-primary" onclick="navigateTo('checkoutReview')">
+                    <button id="proceedToCheckoutButton" class="btn btn-primary" onclick="navigateTo('fourth')">
                         Proceed to Checkout
                     </button>
                   </div>
@@ -195,6 +144,57 @@
 
     </div>            
   </section>
+
+  <section class="py-5" style="display: none;" id="fourth">
+    <div class="container">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6">Checkout: Review Your Order</h2>
+
+            <div id="checkoutReviewItems" class="flex-grow scroll-y-auto space-y-4">
+                <!-- Order review items will be loaded here -->
+            </div>
+
+              <div class="row g-3 mb-3">
+                  <div class="col-md-6">
+                    <!--<p class="text-xl font-semibold text-gray-800">Total: <span id="cartTotal" class="text-purple-600">$0.00</span></p>-->
+                    <p class="text-xl font-semibold text-gray-800">Total: <span id="checkoutReviewTotal" class="text-purple-600">$0.00</span></p>
+                  </div>                
+                  <div class="col-md-6">
+                    <button id="proceedToCheckoutButton" class="btn btn-primary" onclick="navigateTo('fifth')">
+                        Continue to Payment
+                    </button>
+                  </div>
+              </div>            
+
+    </div>            
+  </section>  
+
+        <!-- Checkout Payment Page -->
+        <section id="fifth" class="page-section flex-grow p-4 bg-white rounded-lg shadow-lg flex flex-col" style="display: none;">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6">Checkout: Payment Details</h2>
+            <form id="paymentForm" class="flex-grow space-y-6">
+                <div>
+                    <label for="cardNumber" class="block text-gray-700 text-sm font-semibold mb-2">Card Number</label>
+                    <input type="text" id="cardNumber" class="w-full p-3 border border-gray-300 rounded-md focus:ring-purple-500 focus:border-purple-500 transition duration-300" placeholder="•••• •••• •••• ••••" required maxlength="19">
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div>
+                        <label for="expiryDate" class="block text-gray-700 text-sm font-semibold mb-2">Expiry Date (MM/YY)</label>
+                        <input type="text" id="expiryDate" class="w-full p-3 border border-gray-300 rounded-md focus:ring-purple-500 focus:border-purple-500 transition duration-300" placeholder="MM/YY" required maxlength="5">
+                    </div>
+                    <div>
+                        <label for="cvv" class="block text-gray-700 text-sm font-semibold mb-2">CVV</label>
+                        <input type="text" id="cvv" class="w-full p-3 border border-gray-300 rounded-md focus:ring-purple-500 focus:border-purple-500 transition duration-300" placeholder="•••" required maxlength="4">
+                    </div>
+                </div>
+                <div>
+                    <label for="cardName" class="block text-gray-700 text-sm font-semibold mb-2">Name on Card</label>
+                    <input type="text" id="cardName" class="w-full p-3 border border-gray-300 rounded-md focus:ring-purple-500 focus:border-purple-500 transition duration-300" placeholder="John Doe" required>
+                </div>
+                <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-md shadow-lg transition duration-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                    Place Order
+                </button>
+            </form>
+        </section>  
 
   <!-- Footer -->
   <footer class="bg-light text-center py-4 mt-5 border-top">
@@ -217,6 +217,8 @@
         const cartItemCountSpan = document.getElementById('cartItemCount');
         const cartItemsContainer = document.getElementById('cartItemsContainer');
         const cartTotalSpan = document.getElementById('cartTotal');
+        const checkoutReviewItems = document.getElementById('checkoutReviewItems');
+        const checkoutReviewTotalSpan = document.getElementById('checkoutReviewTotal');
 
         async function addSampleEvent() {
 
@@ -396,7 +398,24 @@
                         document.getElementById("first").style.display = "none"; 
                         document.getElementById("second").style.display = "none";  
                         renderCart();
-                        break;                                                              
+                        break;   
+                    case 'fourth':
+                        selectedEvent = events[0];
+                        document.getElementById("fourth").style.display = "";
+                        document.getElementById("first").style.display = "none"; 
+                        document.getElementById("second").style.display = "none";  
+                        document.getElementById("third").style.display = "none";
+                        renderCheckoutReview();
+                        break;   
+                    case 'fifth':
+                        selectedEvent = events[0];
+                        document.getElementById("fifth").style.display = "";
+                        document.getElementById("first").style.display = "none"; 
+                        document.getElementById("second").style.display = "none";  
+                        document.getElementById("third").style.display = "none";
+                        document.getElementById("fourth").style.display = "none";
+                        renderCheckoutReview();
+                        break;                                                                                                           
                     case 'eventList':
                         document.getElementById("eventListPage").style.display = "";
                         document.getElementById("eventDetailPage").style.display = "none";   
@@ -504,7 +523,42 @@
                 button.addEventListener('click', handleCartQuantityChange);
             });
 */            
+        }   
+        
+        
+        /**
+         * Renders the order review page before payment.
+         */
+        function renderCheckoutReview() {
+            //if (currentPage !== 'checkoutReview') return;
+            checkoutReviewItems.innerHTML = '';
+            let total = 0;
+
+            if (cart.items.length === 0) {
+                checkoutReviewItems.innerHTML = '<p class="text-gray-500 text-center col-span-full">Your cart is empty. Please add items to proceed.</p>';
+                // Optionally redirect back to cart if empty
+                setTimeout(() => window.navigateTo('cart'), 1000);
+                return;
+            }
+
+            cart.items.forEach(item => {
+                total += item.price * item.quantity;
+                const reviewItemHtml = `
+                    <div class="flex items-center bg-gray-50 rounded-lg p-4 shadow-sm">
+                        <img src="${item.imageUrl || 'https://placehold.co/80x50/a78bfa/ffffff?text=Ticket'}" alt="${item.title}" class="w-20 h-14 object-cover rounded-md mr-4">
+                        <div class="flex-grow">
+                            <h3 class="text-lg font-semibold text-gray-900">${item.title}</h3>
+                            <p class="text-gray-600">${item.quantity} x $${item.price.toFixed(2)}</p>
+                        </div>
+                        <span class="text-lg font-bold text-purple-700">$${(item.price * item.quantity).toFixed(2)}</span>
+                    </div>
+                `;
+                checkoutReviewItems.insertAdjacentHTML('beforeend', reviewItemHtml);
+            });
+            checkoutReviewTotalSpan.textContent = `$${total.toFixed(2)}`;
+            lucide.createIcons();
         }        
+
         // --- Initialization on Window Load ---
         window.onload = async function() {
 
