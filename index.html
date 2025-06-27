@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sport Events</title>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+
+  <style>
+    .cart-icon {
+      position: relative;
+    }
+    .cart-badge {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background-color: red;
+      color: white;
+      border-radius: 50%;
+      font-size: 0.75rem;
+      padding: 2px 6px;
+    }
+  </style>
+
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#">Sport Events</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="#" onclick="navigateTo('first')">Browse Events</a></li>
+          <li class="nav-item"><a class="nav-link" href="createevent.html">Create Event</a></li>
+
+          <li class="nav-item me-3">
+            <a class="nav-link position-relative cart-icon" href="#" onclick="navigateTo('third')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                   fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                <path d="M0 1.5A.5.5 0 0 1 .5 1h1a.5.5 0 0 1 
+                         .485.379L2.89 5H14.5a.5.5 0 0 1 
+                         .49.598l-1.5 7A.5.5 0 0 1 13 
+                         13H4a.5.5 0 0 1-.49-.402L1.61 
+                         2H.5a.5.5 0 0 1-.5-.5zM3.14 
+                         6l1.25 5h8.223l1.25-5H3.14zM5.5 
+                         14a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm5 
+                         0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+              </svg>
+              <span class="cart-badge" id="cartItemCount">0</span> <!-- Change this dynamically -->
+            </a>
+          </li>          
+
+          <li class="nav-item"><a class="nav-link" href="login.html">Sign In</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="py-5 text-center bg-primary text-white">
+    <div class="container">
+      <h1 class="display-5 fw-bold">Discover Events Near You</h1>
+      <p class="lead">Attend, host, and explore amazing events.</p>
+      <a href="#" class="btn btn-light btn-lg" id="adminAddEventButton">Create an Event</a>
+    </div>
+  </section>
+
+  <!-- Events Section -->
+  <section class="py-5" id="first">
+    <div class="container">
+      <h2 class="mb-4">Upcoming Events</h2>
+      <div class="row g-4" id="eventListContainer">
+
+	<p class="text-gray-500 text-center col-span-full">No events available. Try adding a sample event!</p>
+
+        <!-- Event Card -->
+<!--
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="Event Image">
+            <div class="card-body">
+              <h5 class="card-title">Tech Conference 2025</h5>
+              <p class="card-text">
+                <strong>Date:</strong> July 15, 2025<br />
+                <strong>Location:</strong> San Francisco, CA
+              </p>
+              <a href="#" class="btn btn-primary">Get Tickets</a>
+            </div>
+          </div>
+        </div>
+-->         
+        <!-- Repeat Event Card as Needed -->
+<!--
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="Event Image">
+            <div class="card-body">
+              <h5 class="card-title">Live Music Night</h5>
+              <p class="card-text">
+                <strong>Date:</strong> August 2, 2025<br />
+                <strong>Location:</strong> New York, NY
+              </p>
+              <a href="#" class="btn btn-primary" onclick="navigateTo('second')">Get Tickets</a>
+            </div>
+          </div>
+        </div>
+-->         
+        <!-- More events... -->
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Events Section -->
+  <section class="py-5" style="display: none;" id="second">
+    <div class="container">
+      <h2 class="mb-4">Select Event</h2>
+      <div class="row g-4">
+        <!-- Event Card -->
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="Event Image">
+            <div class="card-body">
+              <h5 class="card-title">Tech Conference 2025</h5>
+              <p class="card-text">
+                <strong>Date:</strong> July 15, 2025<br />
+                <strong>Location:</strong> San Francisco, CA
+              </p>
+              <!--<a href="#" class="btn btn-primary" onclick="navigateTo('first')">Add to Cart</a>-->
+              <div class="row g-3 mb-3">
+                  <div class="col-md-3">
+                    <label for="ticketQuantity" class="form-label"><strong>Quantity:</strong></label>
+                  </div>                
+                  <div class="col-md-4">
+                    <input type="number" id="ticketQuantity" value="1" class="form-control" min="0" max="500" />
+                  </div>
+                  <div class="col-md-5">
+                    <a href="#" class="btn btn-primary" id="addToCartButton">Add to Cart</a>
+                  </div>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+
+        <!-- Repeat Event Card as Needed -->
+<!--
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="Event Image">
+            <div class="card-body">
+              <h5 class="card-title">Live Music Night</h5>
+              <p class="card-text">
+                <strong>Date:</strong> August 2, 2025<br />
+                <strong>Location:</strong> New York, NY
+              </p>
+              <a href="#" class="btn btn-primary">Get Tickets</a>
+            </div>
+          </div>
+        </div>
+-->
+        <!-- More events... -->
+      </div>
+    </div>
+  </section>  
+
+
+    <!-- Events Section -->
+  <section class="py-5" style="display: none;" id="third">
+    <div class="container">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6">Your Shopping Cart</h2>
+            <div id="cartItemsContainer" class="flex-grow scroll-y-auto space-y-4">
+                <!-- Cart items will be loaded here -->
+                <p class="text-gray-500 text-center">Your cart is empty.</p>
+            </div>
+
+              <div class="row g-3 mb-3">
+                  <div class="col-md-6">
+                    <p class="text-xl font-semibold text-gray-800">Total: <span id="cartTotal" class="text-purple-600">$0.00</span></p>
+                  </div>                
+                  <div class="col-md-6">
+                    <button id="proceedToCheckoutButton" class="btn btn-primary" onclick="navigateTo('checkoutReview')">
+                        Proceed to Checkout
+                    </button>
+                  </div>
+              </div>            
+
+    </div>            
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-light text-center py-4 mt-5 border-top">
+    <div class="container">
+      <p class="mb-0">&copy; 2025 EventClone. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="module">
+
+        let userId = null;
+        let events = [];
+        let cart = { items: [] }; // { items: [{ eventId, quantity, price, title, imageUrl }] }
+        let selectedEvent = null;
+        let currentPage = 'eventList'; // Initial page
+
+        const adminAddEventButton = document.getElementById('adminAddEventButton');
+        const eventListContainer = document.getElementById('eventListContainer');
+        const cartItemCountSpan = document.getElementById('cartItemCount');
+        const cartItemsContainer = document.getElementById('cartItemsContainer');
+        const cartTotalSpan = document.getElementById('cartTotal');
+
+        async function addSampleEvent() {
+
+                        document.getElementById("first").style.display = "";
+                        document.getElementById("second").style.display = "none";
+                        document.getElementById("third").style.display = "none"; 
+
+            if (events.length === 0) {
+
+            const sampleEvent = {
+                id: 100,
+                title: "Grand Tech Summit 2025",
+                description: "Join us for the most anticipated technology summit of 2025! Featuring leading experts, groundbreaking innovations, and unparalleled networking opportunities. Explore the future of AI, blockchain, cybersecurity, and more. Don't miss out on this transformative experience!",
+                date: "2025-09-15",
+                time: "09:00 AM",
+                location: "London Convention Center, London",
+                price: 199.99,
+                availableTickets: 500,
+                imageUrl: ""
+            };
+            events.push(sampleEvent);
+
+            }
+            else {
+
+
+            const sampleEvent = {
+                id: 100 + events.length,
+                title: "Grand Tech Summit 2025",
+                description: "Join us for the most anticipated technology summit of 2025! Featuring leading experts, groundbreaking innovations, and unparalleled networking opportunities. Explore the future of AI, blockchain, cybersecurity, and more. Don't miss out on this transformative experience!",
+                date: "2025-09-15",
+                time: "09:00 AM",
+                location: "London Convention Center, London",
+                price: 199.99,
+                availableTickets: 500,
+                imageUrl: ""
+            };
+            events.push(sampleEvent);
+
+            }
+
+            //console.log(events);
+            //window.showMessageModal("Success", "Sample event added successfully!");
+            //fetchAndRenderEvents();  
+
+	    eventListContainer.innerHTML = ''; 
+            
+
+            if (events.length === 0) {
+                eventListContainer.innerHTML = '<p class="text-gray-500 text-center col-span-full">No events available. Try adding a sample event!</p>';
+                return;
+            }
+
+            events.forEach(event => {
+                const eventCard = `
+                    <div class="col-md-4">
+                      <div class="card h-100 shadow-sm">
+                        <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="Event Image">
+                        <div class="card-body">
+                          <h5 class="card-title">Tech Conference 2025</h5>
+                          <p class="card-text">
+                            <strong>Date:</strong> July 15, 2025<br />
+                            <strong>Location:</strong> San Francisco, CA
+                          </p>
+                          <a href="#" class="btn btn-primary" onclick="window.navigateTo('second', '${event.id}')">Get Tickets</a>
+                        </div>
+                      </div>
+                    </div>
+                `;
+                eventListContainer.insertAdjacentHTML('beforeend', eventCard);
+            });            
+            
+
+        }        
+        adminAddEventButton.addEventListener('click', addSampleEvent);
+
+        function updateCartIconCount() {
+            const totalItems = cart.items.reduce((sum, item) => sum + item.quantity, 0);
+            //alert(totalItems);
+            if (totalItems > 0) {
+                cartItemCountSpan.textContent = totalItems;
+                //cartItemCountSpan.classList.remove('hidden');
+                cartItemCountSpan.style.display = "";
+            } else {
+                //cartItemCountSpan.classList.add('hidden');
+                cartItemCountSpan.style.display = "none";
+            }
+        }       
+        
+        async function addToCart() {
+/*            
+            if (!userId) {
+                window.showMessageModal("Error", "User not authenticated. Please refresh the page.");
+                return;
+            }
+*/
+            const quantityInput = document.getElementById('ticketQuantity');
+            const quantity = parseInt(quantityInput.value);
+
+            if (isNaN(quantity) || quantity <= 0) {
+                window.showMessageModal("Invalid Quantity", "Please enter a valid quantity.");
+                return;
+            }
+            if (quantity > selectedEvent.availableTickets) {
+                window.showMessageModal("Not Enough Tickets", `Only ${selectedEvent.availableTickets} tickets available.`);
+                return;
+            }
+
+            const existingItemIndex = cart.items.findIndex(item => item.eventId === selectedEvent.id);
+
+            if (existingItemIndex > -1) {
+                // Update quantity if item already in cart
+                cart.items[existingItemIndex].quantity += quantity;
+            } else {
+                // Add new item to cart
+                cart.items.push({
+                    eventId: selectedEvent.id,
+                    title: selectedEvent.title,
+                    price: selectedEvent.price,
+                    quantity: quantity,
+                    imageUrl: selectedEvent.imageUrl
+                });
+            }
+            updateCartIconCount();
+                
+        }     
+        document.getElementById('addToCartButton').addEventListener('click', addToCart);   
+        
+        /**
+         * Generates a UUID.
+         * @returns {string} A unique ID.
+         */
+        function generateUUID() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                const r = Math.random() * 16 | 0,
+                    v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+        
+        /**
+         * Switches the active page/view in the single-page application.
+         * @param {string} pageName - The ID of the section to show (e.g., 'eventList', 'eventDetail').
+         * @param {any} [data] - Optional data to pass to the next page (e.g., event ID).
+         */
+        window.navigateTo = function(pageName, data = null) { // Made global
+            // Hide all page sections
+/*            
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.remove('active');
+            });
+*/
+            // Show the requested page section
+            //alert(pageName);
+            const targetPage = document.getElementById(`${pageName}`);
+            if (targetPage) {
+                targetPage.classList.add('active');
+                currentPage = pageName; // Update current page state
+
+                // Perform page-specific rendering
+                switch (pageName) {
+                    case 'first':
+                        document.getElementById("first").style.display = "";
+                        document.getElementById("second").style.display = "none";
+                        document.getElementById("third").style.display = "none";                           
+                        break;  
+                    case 'second':
+//alert(data);
+                        selectedEvent = events[0];
+                        document.getElementById("second").style.display = "";
+                        document.getElementById("first").style.display = "none"; 
+                        document.getElementById("third").style.display = "none";  
+                        break;  
+                    case 'third':
+                        selectedEvent = events[0];
+                        document.getElementById("third").style.display = "";
+                        document.getElementById("first").style.display = "none"; 
+                        document.getElementById("second").style.display = "none";  
+                        renderCart();
+                        break;                                                              
+                    case 'eventList':
+                        document.getElementById("eventListPage").style.display = "";
+                        document.getElementById("eventDetailPage").style.display = "none";   
+                        document.getElementById("cartPage").style.display = "none";    
+                        document.getElementById("checkoutReviewPage").style.display = "none";                        
+                        document.getElementById("checkoutPaymentPage").style.display = "none";                        
+                        renderEvents();
+                        break;
+                    case 'eventDetail':
+                        if (data) {
+                            console.log(data);
+                            //selectedEvent = events.find(event => event.id === data);
+                            selectedEvent = events[0];
+                            console.log(events[0]);
+                            console.log(document.getElementById("eventListPage").style.display);
+                            document.getElementById("eventListPage").style.display = "none";
+                            document.getElementById("eventDetailPage").style.display = "";
+                            renderEventDetail();
+                        } else {
+                            // If no data, navigate back to list or show error
+                            navigateTo('eventList');
+                        }
+                        break;
+                    case 'cart':
+                        
+                        document.getElementById("eventListPage").style.display = "none";
+                        document.getElementById("eventDetailPage").style.display = "none";   
+                        document.getElementById("cartPage").style.display = "";     
+                        document.getElementById("checkoutReviewPage").style.display = "none";                        
+                        document.getElementById("checkoutPaymentPage").style.display = "none";                                             
+                        renderCart();
+                        break;
+                    case 'checkoutReview':
+
+                        document.getElementById("eventListPage").style.display = "none";
+                        document.getElementById("eventDetailPage").style.display = "none";   
+                        document.getElementById("cartPage").style.display = "none";    
+                        document.getElementById("checkoutReviewPage").style.display = ""; 
+                        document.getElementById("checkoutPaymentPage").style.display = "none";                      
+                        renderCheckoutReview();
+                        break;
+                    case 'checkoutPayment':
+                        // No specific rendering for this, just showing form
+                        
+                        document.getElementById("eventListPage").style.display = "none";
+                        document.getElementById("eventDetailPage").style.display = "none";   
+                        document.getElementById("cartPage").style.display = "none";    
+                        document.getElementById("checkoutReviewPage").style.display = "none";                        
+                        document.getElementById("checkoutPaymentPage").style.display = "";
+                        break;
+                    case 'checkoutConfirmation':
+                        // Data here should be order details if available
+                        break;
+                }
+                // Scroll to top of the main content area
+                document.querySelector('main').scrollTo(0, 0);
+            } else {
+                console.error(`Page section with ID '${pageName}Page' not found.`);
+            }
+            lucide.createIcons(); // Re-render Lucide icons on page change
+        }  
+        
+        /**
+         * Renders the shopping cart page with current items.
+         */
+        function renderCart() {
+            //if (currentPage !== 'cart') return;
+            cartItemsContainer.innerHTML = ''; // Clear previous content
+            let total = 0;
+
+            if (cart.items.length === 0) {
+                cartItemsContainer.innerHTML = '<p class="text-gray-500 text-center col-span-full">Your cart is empty.</p>';
+                proceedToCheckoutButton.disabled = true;
+            } else {
+                cart.items.forEach(item => {
+                    total += item.price * item.quantity;
+                    const cartItemHtml = `
+                        <div class="flex flex-col sm:flex-row items-center bg-gray-50 rounded-lg p-4 shadow-sm">
+                            <img src="${item.imageUrl || 'https://placehold.co/100x70/a78bfa/ffffff?text=Ticket'}" alt="${item.title}" class="w-24 h-16 object-cover rounded-md mb-3 sm:mb-0 sm:mr-4">
+                            <div class="flex-grow">
+                                <h3 class="text-lg font-semibold text-gray-900">${item.title}</h3>
+                                <p class="text-gray-600">$${item.price.toFixed(2)} per ticket</p>
+                            </div>
+                            <div class="flex items-center mt-3 sm:mt-0 space-x-3">
+                                <button data-event-id="${item.eventId}" data-action="decrement" class="quantity-button bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-1 px-3 rounded-md transition duration-200">-</button>
+                                <span class="text-lg font-semibold" id="qty-${item.eventId}">${item.quantity}</span>
+                                <button data-event-id="${item.eventId}" data-action="increment" class="quantity-button bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-1 px-3 rounded-md transition duration-200">+</button>
+                                <button data-event-id="${item.eventId}" data-action="remove" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-3 rounded-md shadow-sm transition duration-200">
+                                    <i data-lucide="trash-2" class="w-5 h-5"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    cartItemsContainer.insertAdjacentHTML('beforeend', cartItemHtml);
+                });
+                proceedToCheckoutButton.disabled = false;
+            }
+            //alert(total);
+            cartTotalSpan.textContent = `$${total.toFixed(2)}`;
+            //lucide.createIcons();
+
+            // Add event listeners for quantity buttons
+/*            
+            document.querySelectorAll('.quantity-button').forEach(button => {
+                button.addEventListener('click', handleCartQuantityChange);
+            });
+*/            
+        }        
+        // --- Initialization on Window Load ---
+        window.onload = async function() {
+
+            updateCartIconCount();
+            
+            //fetchAndRenderEvents();
+            //fetchUserCart();
+            window.navigateTo('eventList'); // Navigate to the event list on initial load
+        };
+  </script>
+</body>
+</html>
