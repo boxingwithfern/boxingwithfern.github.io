@@ -152,6 +152,7 @@
 
         <!-- Checkout Payment Page -->
         <section id="fifth" class="page-section flex-grow p-4 bg-white rounded-lg shadow-lg flex flex-col" style="display: none;">
+          <div class="container">
             <h2 class="text-3xl font-bold text-gray-800 mb-6">Checkout: Payment Details</h2>
             <form id="paymentForm">
               <div class="mb-3">
@@ -181,6 +182,7 @@
                 <button type="submit" class="btn btn-success btn-lg">Place Order</button>
               </div>                
             </form>
+            </div>
         </section>  
 
   <!-- Footer -->
@@ -207,6 +209,7 @@
         const cartTotalSpan = document.getElementById('cartTotal');
         const checkoutReviewItems = document.getElementById('checkoutReviewItems');
         const checkoutReviewTotalSpan = document.getElementById('checkoutReviewTotal');
+        const proceedToCheckoutButton = document.getElementById('proceedToCheckoutButton');
 
         async function addSampleEvent() {
 
