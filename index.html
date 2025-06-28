@@ -4,10 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Sport Events</title>
+  
   <link
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
     rel="stylesheet"
   />
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
   <style>
     .cart-icon {
@@ -82,42 +85,21 @@
 	<p class="text-gray-500 text-center col-span-full">No events available. Try adding a sample event!</p>
 
       </div>
-    </div>
+
+      </div>
+
   </section>
 
 
   <!-- Events Section -->
   <section class="py-5" style="display: none;" id="second">
     <div class="container">
-      <h2 class="mb-4">Select Event</h2>
-      <div class="row g-4">
-        <!-- Event Card -->
-        <div class="col-md-4">
-          <div class="card h-100 shadow-sm">
-            <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="Event Image">
-            <div class="card-body">
-              <h5 class="card-title">Tech Conference 2025</h5>
-              <p class="card-text">
-                <strong>Date:</strong> July 15, 2025<br />
-                <strong>Location:</strong> San Francisco, CA
-              </p>
-              <!--<a href="#" class="btn btn-primary" onclick="navigateTo('first')">Add to Cart</a>-->
-              <div class="row g-3 mb-3">
-                  <div class="col-md-3">
-                    <label for="ticketQuantity" class="form-label"><strong>Quantity:</strong></label>
-                  </div>                
-                  <div class="col-md-4">
-                    <input type="number" id="ticketQuantity" value="1" class="form-control" min="0" max="500" />
-                  </div>
-                  <div class="col-md-5">
-                    <a href="#" class="btn btn-primary" id="addToCartButton">Add to Cart</a>
-                  </div>
-              </div>
-              
+            <h2 class="text-3xl font-bold text-gray-800 mb-6">Select Event</h2>
+
+            <div id="eventDetailContent" class="flex-grow scroll-y-auto space-y-4">
+                <!-- Order review items will be loaded here -->
             </div>
-          </div>
-        </div>
-      </div>
+
     </div>
   </section>  
 
@@ -214,6 +196,7 @@
 
         const adminAddEventButton = document.getElementById('adminAddEventButton');
         const eventListContainer = document.getElementById('eventListContainer');
+        const eventDetailContent = document.getElementById('eventDetailContent');
         const cartItemCountSpan = document.getElementById('cartItemCount');
         const cartItemsContainer = document.getElementById('cartItemsContainer');
         const cartTotalSpan = document.getElementById('cartTotal');
@@ -247,11 +230,11 @@
 
             const sampleEvent = {
                 id: 100 + events.length,
-                title: "Grand Tech Summit 2025",
+                title: "Tech Plaza",
                 description: "Join us for the most anticipated technology summit of 2025! Featuring leading experts, groundbreaking innovations, and unparalleled networking opportunities. Explore the future of AI, blockchain, cybersecurity, and more. Don't miss out on this transformative experience!",
                 date: "2025-09-15",
                 time: "09:00 AM",
-                location: "London Convention Center, London",
+                location: "Medway",
                 price: 199.99,
                 availableTickets: 500,
                 imageUrl: ""
@@ -278,12 +261,12 @@
                       <div class="card h-100 shadow-sm">
                         <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="Event Image">
                         <div class="card-body">
-                          <h5 class="card-title">Tech Conference 2025</h5>
+                          <h5 class="card-title">${event.title}</h5>
                           <p class="card-text">
-                            <strong>Date:</strong> July 15, 2025<br />
-                            <strong>Location:</strong> San Francisco, CA
+                            <strong>Date:</strong>${new Date(event.date).toLocaleDateString()} at ${event.time}<br />
+                            <strong>Location:</strong>${event.location}
                           </p>
-                          <a href="#" class="btn btn-primary" onclick="window.navigateTo('second', '${event.id}')">Get Tickets</a>
+                          <a href="#" class="btn btn-primary" onclick="window.navigateTo('second', ${event.id})">Get Tickets</a>
                         </div>
                       </div>
                     </div>
@@ -345,7 +328,7 @@
             updateCartIconCount();
                 
         }     
-        document.getElementById('addToCartButton').addEventListener('click', addToCart);   
+        //document.getElementById('addToCartButton').addEventListener('click', addToCart);   
         
         /**
          * Generates a UUID.
@@ -383,24 +366,35 @@
                     case 'first':
                         document.getElementById("first").style.display = "";
                         document.getElementById("second").style.display = "none";
-                        document.getElementById("third").style.display = "none";                           
+                        document.getElementById("third").style.display = "none";    
+                        document.getElementById("fourth").style.display = "none"; 
+                        document.getElementById("fifth").style.display = "none";    
+                                        
                         break;  
                     case 'second':
 //alert(data);
-                        selectedEvent = events[0];
+                        //selectedEvent = events[0];
+                        console.log(data);
+                        selectedEvent = events.find(event => event.id === data);
+                        console.log(selectedEvent.id);
                         document.getElementById("second").style.display = "";
                         document.getElementById("first").style.display = "none"; 
                         document.getElementById("third").style.display = "none";  
+                        document.getElementById("fourth").style.display = "none";
+                        document.getElementById("fifth").style.display = "none";
+                        renderEventDetail();  
                         break;  
                     case 'third':
-                        selectedEvent = events[0];
+                        //selectedEvent = events[0];
                         document.getElementById("third").style.display = "";
                         document.getElementById("first").style.display = "none"; 
                         document.getElementById("second").style.display = "none";  
+                        document.getElementById("fourth").style.display = "none";
+                        document.getElementById("fifth").style.display = "none";
                         renderCart();
                         break;   
                     case 'fourth':
-                        selectedEvent = events[0];
+                        //selectedEvent = events[0];
                         document.getElementById("fourth").style.display = "";
                         document.getElementById("first").style.display = "none"; 
                         document.getElementById("second").style.display = "none";  
@@ -408,7 +402,7 @@
                         renderCheckoutReview();
                         break;   
                     case 'fifth':
-                        selectedEvent = events[0];
+                        //selectedEvent = events[0];
                         document.getElementById("fifth").style.display = "";
                         document.getElementById("first").style.display = "none"; 
                         document.getElementById("second").style.display = "none";  
@@ -475,8 +469,44 @@
             } else {
                 console.error(`Page section with ID '${pageName}Page' not found.`);
             }
-            lucide.createIcons(); // Re-render Lucide icons on page change
+            //lucide.createIcons(); // Re-render Lucide icons on page change
         }  
+
+        /**
+         * Renders the detailed view of the selected event.
+         */
+        function renderEventDetail() {
+            //if (currentPage !== 'eventDetail' || !selectedEvent) return;
+            eventDetailContent.innerHTML = ''; // Clear previous content
+
+            const detailHtml = `
+                <div class="lg:w-1/2 flex justify-center items-center">
+                    <img src="${selectedEvent.imageUrl || 'https://placehold.co/600x400/a78bfa/ffffff?text=Event+Image'}" alt="${selectedEvent.title}" class="rounded-lg shadow-xl w-full max-h-96 object-cover">
+                </div>
+                <div class="lg:w-1/2 p-4">
+                    <h2 class="text-4xl font-bold text-gray-800 mb-4">${selectedEvent.title}</h2>
+                    <p class="text-gray-700 mb-6 leading-relaxed">${selectedEvent.description}</p>
+                    <div class="space-y-3 text-lg text-gray-700 mb-8">
+                        <p class="flex items-center"><i data-lucide="calendar" class="w-5 h-5 mr-3 text-purple-600"></i> Date: <span class="font-semibold ml-2">${new Date(selectedEvent.date).toLocaleDateString()}</span></p>
+                        <p class="flex items-center"><i data-lucide="clock" class="w-5 h-5 mr-3 text-purple-600"></i> Time: <span class="font-semibold ml-2">${selectedEvent.time}</span></p>
+                        <p class="flex items-center"><i data-lucide="map-pin" class="w-5 h-5 mr-3 text-purple-600"></i> Location: <span class="font-semibold ml-2">${selectedEvent.location}</span></p>
+                        <p class="flex items-center"><i data-lucide="ticket" class="w-5 h-5 mr-3 text-purple-600"></i> Available Tickets: <span class="font-semibold ml-2">${selectedEvent.availableTickets}</span></p>
+                        <p class="flex items-center"><i data-lucide="dollar-sign" class="w-5 h-5 mr-3 text-purple-600"></i> Price: <span class="font-bold text-green-600 text-2xl ml-2">$${selectedEvent.price.toFixed(2)}</span></p>
+                    </div>
+                    <div class="flex items-center space-x-4 mt-6">
+                        <label for="ticketQuantity" class="text-lg font-semibold text-gray-800">Quantity:</label>
+                        <input type="number" id="ticketQuantity" value="1" min="1" max="${selectedEvent.availableTickets}" class="w-24 p-2 border border-gray-300 rounded-md text-center focus:ring-purple-500 focus:border-purple-500 transition duration-300">
+                        <button id="addToCartButton" class="btn btn-primary">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            `;
+            eventDetailContent.insertAdjacentHTML('beforeend', detailHtml);
+            //lucide.createIcons();
+
+            document.getElementById('addToCartButton').addEventListener('click', addToCart);
+        }        
         
         /**
          * Renders the shopping cart page with current items.
@@ -499,15 +529,31 @@
                                 <h3 class="text-lg font-semibold text-gray-900">${item.title}</h3>
                                 <p class="text-gray-600">$${item.price.toFixed(2)} per ticket</p>
                             </div>
-                            <div class="flex items-center mt-3 sm:mt-0 space-x-3">
-                                <button data-event-id="${item.eventId}" data-action="decrement" class="quantity-button bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-1 px-3 rounded-md transition duration-200">-</button>
-                                <span class="text-lg font-semibold" id="qty-${item.eventId}">${item.quantity}</span>
-                                <button data-event-id="${item.eventId}" data-action="increment" class="quantity-button bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-1 px-3 rounded-md transition duration-200">+</button>
-                                <button data-event-id="${item.eventId}" data-action="remove" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-3 rounded-md shadow-sm transition duration-200">
-                                    <i data-lucide="trash-2" class="w-5 h-5"></i>
-                                </button>
+  	                      <div class="row">                
+                            <div class="col-lg-2">
+                                      <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <button type="button" class="quantity-left-minus btn btn-light btn-number"  data-type="minus" data-field="">
+                                              <span class="bi bi-dash"></span>
+                                            </button>
+                                        </span>
+                                        <input type="text" id="qty-${item.eventId}" name="qty-${item.eventId}" class="form-control input-number" value="${item.quantity}" min="1" max="100" readonly>                                        
+                                        <span class="input-group-btn">
+                                            <button type="button" class="quantity-right-plus btn btn-light btn-number" data-type="plus" data-field="">
+                                                <span class="bi bi-plus"></span>
+                                            </button>
+                                        </span>
+                                        <span class="input-group-btn">
+                                            <button type="button" class="quantity-left-minus btn btn-danger btn-number"  data-type="minus" data-field="">
+                                              <span class="bi bi-trash"></span>
+                                            </button>
+                                        </span>                                    
+                                    </div>
+                                    
                             </div>
+	                        </div>
                         </div>
+                        
                     `;
                     cartItemsContainer.insertAdjacentHTML('beforeend', cartItemHtml);
                 });
@@ -556,7 +602,7 @@
                 checkoutReviewItems.insertAdjacentHTML('beforeend', reviewItemHtml);
             });
             checkoutReviewTotalSpan.textContent = `$${total.toFixed(2)}`;
-            lucide.createIcons();
+            //lucide.createIcons();
         }        
 
         // --- Initialization on Window Load ---
