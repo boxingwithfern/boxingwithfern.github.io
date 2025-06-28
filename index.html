@@ -153,28 +153,33 @@
         <!-- Checkout Payment Page -->
         <section id="fifth" class="page-section flex-grow p-4 bg-white rounded-lg shadow-lg flex flex-col" style="display: none;">
             <h2 class="text-3xl font-bold text-gray-800 mb-6">Checkout: Payment Details</h2>
-            <form id="paymentForm" class="flex-grow space-y-6">
-                <div>
-                    <label for="cardNumber" class="block text-gray-700 text-sm font-semibold mb-2">Card Number</label>
-                    <input type="text" id="cardNumber" class="w-full p-3 border border-gray-300 rounded-md focus:ring-purple-500 focus:border-purple-500 transition duration-300" placeholder="•••• •••• •••• ••••" required maxlength="19">
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div>
-                        <label for="expiryDate" class="block text-gray-700 text-sm font-semibold mb-2">Expiry Date (MM/YY)</label>
-                        <input type="text" id="expiryDate" class="w-full p-3 border border-gray-300 rounded-md focus:ring-purple-500 focus:border-purple-500 transition duration-300" placeholder="MM/YY" required maxlength="5">
-                    </div>
-                    <div>
-                        <label for="cvv" class="block text-gray-700 text-sm font-semibold mb-2">CVV</label>
-                        <input type="text" id="cvv" class="w-full p-3 border border-gray-300 rounded-md focus:ring-purple-500 focus:border-purple-500 transition duration-300" placeholder="•••" required maxlength="4">
-                    </div>
-                </div>
-                <div>
-                    <label for="cardName" class="block text-gray-700 text-sm font-semibold mb-2">Name on Card</label>
-                    <input type="text" id="cardName" class="w-full p-3 border border-gray-300 rounded-md focus:ring-purple-500 focus:border-purple-500 transition duration-300" placeholder="John Doe" required>
-                </div>
-                <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-md shadow-lg transition duration-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
-                    Place Order
-                </button>
+            <form id="paymentForm">
+              <div class="mb-3">
+                <label for="cardNumber" class="form-label">Card Number</label>
+                <input type="text" id="cardNumber" class="form-control" placeholder="•••• •••• •••• ••••" required maxlength="19">
+              </div>              
+
+                <div class="row g-3 mb-3">
+                  <div class="col-md-6">
+                    <label for="expiryDate" class="form-label">Expiry Date (MM/YY)</label>
+                    <input type="text" id="expiryDate" class="form-control" placeholder="MM/YY" required maxlength="5">
+                  </div>
+                  <div class="col-md-6">
+                    <label for="cvv" class="form-label">CVV</label>
+                    <input type="text" id="cvv" class="form-control" placeholder="•••" required maxlength="4">
+                  </div>
+                </div>  
+                
+                <div class="mb-3">
+                    <label for="cardName" class="form-label">Name on Card</label>
+                    <input type="text" id="cardName" class="form-control" placeholder="John Doe" required>                  
+                </div>                
+
+
+              <!-- Submit -->
+              <div class="d-grid">
+                <button type="submit" class="btn btn-success btn-lg">Place Order</button>
+              </div>                
             </form>
         </section>  
 
