@@ -762,18 +762,18 @@
                             <div class="col-lg-2">
                                       <div class="input-group">
                                         <span class="input-group-btn">
-                                            <button id="minusquantity" onclick="window.minusQuantity(${item.eventId})" type="button" class="quantity-left-minus btn btn-light btn-number"  data-type="minus" data-field="">
+                                            <button data-event-id="${item.eventId}" data-action="decrement" id="minusquantity" type="button" class="quantity-button quantity-left-minus btn btn-light btn-number"  data-type="minus" data-field="">
                                               <span class="bi bi-dash"></span>
                                             </button>
                                         </span>
                                         <input type="text" id="qty-${item.eventId}" name="qty-${item.eventId}" class="form-control input-number" value="${item.quantity}" min="1" max="100" readonly>                                        
                                         <span class="input-group-btn">
-                                            <button id="plusquantity" onclick="window.plusQuantity(${item.eventId})" type="button" class="quantity-right-plus btn btn-light btn-number" data-type="plus" data-field="">
+                                            <button data-event-id="${item.eventId}" data-action="increment" id="plusquantity" type="button" class="quantity-button quantity-right-plus btn btn-light btn-number" data-type="plus" data-field="">
                                                 <span class="bi bi-plus"></span>
                                             </button>
                                         </span>
                                         <span class="input-group-btn">
-                                            <button type="button" class="quantity-left-minus btn btn-danger btn-number"  data-type="minus" data-field="">
+                                            <button data-event-id="${item.eventId}" data-action="remove" type="button" class="quantity-button quantity-left-minus btn btn-danger btn-number"  data-type="minus" data-field="">
                                               <span class="bi bi-trash"></span>
                                             </button>
                                         </span>                                    
@@ -795,12 +795,80 @@
             //lucide.createIcons();
 
             // Add event listeners for quantity buttons
-/*            
+           
             document.querySelectorAll('.quantity-button').forEach(button => {
+              //alert("enter!");
                 button.addEventListener('click', handleCartQuantityChange);
             });
-*/            
+            
         }  
+
+        async function handleCartQuantityChange(event) {
+            
+            const button = event.currentTarget;
+            const eventId = button.dataset.eventId;
+            const action = button.dataset.action;            
+
+            let itemIndex = cart.items.findIndex(item => item.eventId == eventId);
+
+            let total = 0;
+
+            if (itemIndex === -1) return; // Should not happen
+
+            //alert(button + "\n" + eventId + "\n" + action + "\n" + itemIndex);
+
+            let currentItem = cart.items[itemIndex];
+            const eventDetails = events.find(e => e.id == eventId);
+
+            if (!eventDetails) {
+                //alert("e enter here!");
+                 //window.showMessageModal("Error", "Event details not found for this item.");
+                 return;
+            }
+
+            if (action === 'increment') {
+                if (currentItem.quantity < eventDetails.availableTickets) {
+                    //alert("increment");
+                    currentItem.quantity++;
+                    document.getElementById('qty-' + eventId).value = currentItem.quantity;
+                } else {
+                    //window.showMessageModal("Limit Reached", `Cannot add more tickets for ${currentItem.title}. Only ${eventDetails.availableTickets} available.`);
+                }
+            } else if (action === 'decrement') {
+                //alert("decrement")
+                currentItem.quantity--;
+                document.getElementById('qty-' + eventId).value = currentItem.quantity;
+            } else if (action === 'remove') {
+                //alert("remove 1");
+                cart.items.splice(itemIndex, 1);
+            }
+
+            // If quantity drops to 0, remove the item
+            if (currentItem.quantity <= 0 && action !== 'remove') {
+              //alert("remove 2");
+                cart.items.splice(itemIndex, 1);
+            }
+
+            cart.items.forEach(item => {
+                total += item.price * item.quantity;
+            });   
+            cartTotalSpan.textContent = `$${total.toFixed(2)}`;            
+
+            renderCart();
+            updateCartIconCount();
+
+            // Update cart in Firestore
+/*            
+            try {
+                const cartDocRef = doc(db, `artifacts/${appId}/users/${userId}/carts`, 'currentCart');
+                await setDoc(cartDocRef, { items: cart.items }); // Overwrite with updated items
+                // Firestore listener will re-render the cart automatically
+            } catch (error) {
+                console.error("Error updating cart:", error);
+                window.showMessageModal("Error", "Failed to update cart. Please try again.");
+            }
+*/                
+        }        
                     
         window.minusQuantity = function(data = null) {
           var qty = document.getElementById('qty-' + data).value;
@@ -812,7 +880,7 @@
           {
             document.getElementById('qty-' + data).value = 0;
           }
-          else{
+          else {
             document.getElementById('qty-' + data).value =  parseInt(document.getElementById('qty-' + data).value) - 1;
 
             cart.items[existingItemIndex].quantity = parseInt(document.getElementById('qty-' + data).value);
@@ -821,7 +889,8 @@
                 total += item.price * item.quantity;
             });
             //checkoutReviewTotalSpan.textContent = `$${total.toFixed(2)}`;     
-            cartTotalSpan.textContent = `$${total.toFixed(2)}`;             
+            cartTotalSpan.textContent = `$${total.toFixed(2)}`; 
+            updateCartIconCount();            
 
             //alert(data + "\n" + cart.items.length + "\n" + qty + "\n" + existingItemIndex);
 
@@ -845,10 +914,38 @@
                 total += item.price * item.quantity;
             });
             //checkoutReviewTotalSpan.textContent = `$${total.toFixed(2)}`;     
-            cartTotalSpan.textContent = `$${total.toFixed(2)}`;     
+            cartTotalSpan.textContent = `$${total.toFixed(2)}`; 
+            updateCartIconCount();    
 
           //alert(cart.items[existingItemIndex].quantity);
-        }                
+        }   
+        window.removeItem = function(data = null) {
+          var qty = document.getElementById('qty-' + data).value;
+          let total = 0;
+          
+          const existingItemIndex = cart.items.findIndex(item => item.eventId === data);
+
+          //alert(data + "\n" + cart.items.length + "\n" + qty + "\n" + existingItemIndex);
+
+          //document.getElementById('qty-' + data).value = parseInt(document.getElementById('qty-' + data).value) + 1;
+
+          //cart.items[existingItemIndex].quantity = parseInt(document.getElementById('qty-' + data).value);
+
+            //delete cart.items[existingItemIndex];
+            cart.items.splice(existingItemIndex, existingItemIndex);
+
+            renderCart();
+            updateCartIconCount();
+/*
+            cart.items.forEach(item => {
+                total += item.price * item.quantity;
+            });
+*/            
+            //checkoutReviewTotalSpan.textContent = `$${total.toFixed(2)}`;     
+            //cartTotalSpan.textContent = `$${total.toFixed(2)}`;     
+
+          //alert(cart.items[existingItemIndex].quantity);
+        }                      
         
         /**
          * Renders the order review page before payment.
