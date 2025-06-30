@@ -518,7 +518,7 @@
                 //cartItemCountSpan.classList.add('hidden');
                 cartItemCountSpan.style.display = "none";
             }
-        }       
+        }           
         
         async function addToCart() {
 /*            
@@ -762,13 +762,13 @@
                             <div class="col-lg-2">
                                       <div class="input-group">
                                         <span class="input-group-btn">
-                                            <button type="button" class="quantity-left-minus btn btn-light btn-number"  data-type="minus" data-field="">
+                                            <button id="minusquantity" onclick="window.minusQuantity(${item.eventId})" type="button" class="quantity-left-minus btn btn-light btn-number"  data-type="minus" data-field="">
                                               <span class="bi bi-dash"></span>
                                             </button>
                                         </span>
                                         <input type="text" id="qty-${item.eventId}" name="qty-${item.eventId}" class="form-control input-number" value="${item.quantity}" min="1" max="100" readonly>                                        
                                         <span class="input-group-btn">
-                                            <button type="button" class="quantity-right-plus btn btn-light btn-number" data-type="plus" data-field="">
+                                            <button id="plusquantity" onclick="window.plusQuantity(${item.eventId})" type="button" class="quantity-right-plus btn btn-light btn-number" data-type="plus" data-field="">
                                                 <span class="bi bi-plus"></span>
                                             </button>
                                         </span>
@@ -785,8 +785,10 @@
                         
                     `;
                     cartItemsContainer.insertAdjacentHTML('beforeend', cartItemHtml);
+                    //document.getElementById('minusquantity').addEventListener('click', minusQuantity);
+                    //document.getElementById('plusquantity').addEventListener('click', plusQuantity);                    
                 });
-                proceedToCheckoutButton.disabled = false;
+                proceedToCheckoutButton.disabled = false;                
             }
             //alert(total);
             cartTotalSpan.textContent = `$${total.toFixed(2)}`;
@@ -798,8 +800,55 @@
                 button.addEventListener('click', handleCartQuantityChange);
             });
 */            
-        }   
-        
+        }  
+                    
+        window.minusQuantity = function(data = null) {
+          var qty = document.getElementById('qty-' + data).value;
+          
+          const existingItemIndex = cart.items.findIndex(item => item.eventId === data);
+                    
+
+          if(qty<= 1)
+          {
+            document.getElementById('qty-' + data).value = 0;
+          }
+          else{
+            document.getElementById('qty-' + data).value =  parseInt(document.getElementById('qty-' + data).value) - 1;
+
+            cart.items[existingItemIndex].quantity = parseInt(document.getElementById('qty-' + data).value);
+
+            cart.items.forEach(item => {
+                total += item.price * item.quantity;
+            });
+            //checkoutReviewTotalSpan.textContent = `$${total.toFixed(2)}`;     
+            cartTotalSpan.textContent = `$${total.toFixed(2)}`;             
+
+            //alert(data + "\n" + cart.items.length + "\n" + qty + "\n" + existingItemIndex);
+
+            //alert(cart.items[existingItemIndex].quantity);
+
+          }
+        } 
+        window.plusQuantity = function(data = null) {
+          var qty = document.getElementById('qty-' + data).value;
+          let total = 0;
+          
+          const existingItemIndex = cart.items.findIndex(item => item.eventId === data);
+
+          //alert(data + "\n" + cart.items.length + "\n" + qty + "\n" + existingItemIndex);
+
+          document.getElementById('qty-' + data).value = parseInt(document.getElementById('qty-' + data).value) + 1;
+
+          cart.items[existingItemIndex].quantity = parseInt(document.getElementById('qty-' + data).value);
+
+            cart.items.forEach(item => {
+                total += item.price * item.quantity;
+            });
+            //checkoutReviewTotalSpan.textContent = `$${total.toFixed(2)}`;     
+            cartTotalSpan.textContent = `$${total.toFixed(2)}`;     
+
+          //alert(cart.items[existingItemIndex].quantity);
+        }                
         
         /**
          * Renders the order review page before payment.
