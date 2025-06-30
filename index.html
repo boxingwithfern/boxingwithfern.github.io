@@ -127,7 +127,7 @@
     <div class="container">
       <h1 class="display-5 fw-bold">Discover Events Near You</h1>
       <p class="lead">Attend, host, and explore amazing events.</p>
-      <a href="#" class="btn btn-light btn-lg" id="adminAddEventButton">Create an Event</a>
+      <a href="createevent.html" class="btn btn-light btn-lg" id="adminAddEventButton">Create an Event</a>
     </div>
   </section>
 
@@ -505,7 +505,7 @@
             
 
         }        
-        adminAddEventButton.addEventListener('click', addSampleEvent);
+        //adminAddEventButton.addEventListener('click', addSampleEvent);
 
         function updateCartIconCount() {
             const totalItems = cart.items.reduce((sum, item) => sum + item.quantity, 0);
@@ -984,6 +984,10 @@
         window.onload = async function() {
 
             updateCartIconCount();
+            addSampleEvent();
+            addSampleEvent();
+            addSampleEvent();
+            addSampleEvent();
             
             //fetchAndRenderEvents();
             //fetchUserCart();
