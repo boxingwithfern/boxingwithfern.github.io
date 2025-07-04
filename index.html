@@ -122,6 +122,33 @@
         }
         .summary-item:last-child {
             border-bottom: none;
+        }    
+        
+        .ticket-display-card {
+            border: 2px dashed #0d6efd; /* Dashed border for ticket */
+            background-color: #ffffff;
+            padding: 2rem;
+            margin-top: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        .ticket-header {
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+        }
+        .ticket-qr-code {
+            width: 120px;
+            height: 120px;
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            text-align: center;
+            color: #6c757d;
+            border-radius: 0.5rem;
         }        
             
   </style>
@@ -490,13 +517,54 @@ Continue reading
 
             <div class="d-grid gap-2">
                 <a href="#" class="btn btn-success btn-lg" onclick="location.reload();">Continue Shopping</a>
-                <!--<a href="#" class="btn btn-outline-secondary btn-lg rounded-lg">View Order Details</a>-->
+                <a href="#" class="btn btn-outline-secondary btn-lg rounded-lg">View Order Details</a>
             </div>
         </div>
     </div>            
 
     </div>            
-  </section>        
+  </section>   
+
+
+  <section class="py-5" id="seventh" style="display: none;">
+    <div class="container">
+
+        <!-- Generated Ticket Display -->
+        <div id="ticketDisplay" class="ticket-display-card">
+            <div class="ticket-header d-flex justify-content-between align-items-center">
+                <h3 class="mb-0 text-xl font-semibold text-gray-800">Your Event Ticket</h3>
+                <span class="badge bg-success text-white px-3 py-2 rounded-full">CONFIRMED</span>
+            </div>
+            <div class="row g-3">
+                <div class="col-md-8">
+                    <p class="mb-1"><strong class="text-gray-700">Event:</strong> <span id="ticketEventName">Tech Innovators Summit 2025</span></p>
+                    <p class="mb-1"><strong class="text-gray-700">Date:</strong> <span id="ticketEventDate">October 26, 2025</span></p>
+                    <p class="mb-1"><strong class="text-gray-700">Location:</strong> <span id="ticketEventLocation">Convention Center, London</span></p>
+                    <p class="mb-1"><strong class="text-gray-700">Attendee:</strong> <span id="ticketAttendeeName">tim duncan</span></p>
+                    <p class="mb-1"><strong class="text-gray-700">Email:</strong> <span id="ticketAttendeeEmail">dev@dev.com</span></p>
+                    <p class="mb-1"><strong class="text-gray-700">Ticket Type:</strong> <span id="ticketTypeDisplay">Student Pass</span></p>
+                    <p class="mb-1"><strong class="text-gray-700">Quantity:</strong> <span id="ticketQuantityDisplay">1</span></p>
+                    <p class="mb-1"><strong class="text-gray-700">Ticket ID:</strong> <span id="ticketId">TICKET-MCOOLX0MKOF5H3</span></p>
+                </div>
+                <div class="col-md-4 d-flex justify-content-center align-items-center">
+                    <div class="ticket-qr-code">
+                        <p class="text-sm">Scan for Entry (Placeholder)</p>
+                        <!-- In a real app, this would be a generated QR code image -->
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <small class="text-gray-500">Please present this ticket at the entrance.</small>
+            </div>
+        </div>      
+                        
+
+    </div>            
+  </section>  
+  
+  
+
+
 
   <!-- Footer -->
   <footer class="bg-light text-center py-4 mt-5 border-top">
@@ -526,7 +594,7 @@ Continue reading
         const checkoutReviewTotalSpan = document.getElementById('checkoutReviewTotal');
         const proceedToCheckoutButton = document.getElementById('proceedToCheckoutButton');
 
-        const form = document.getElementById('paymentForm');; //document.querySelector('form');
+        const form = document.getElementById('paymentForm'); //document.querySelector('form');
         //const thankYouMessage = document.querySelector('#thank-you-message');
         form.addEventListener('submit', (e) => {
           e.preventDefault();
@@ -684,9 +752,12 @@ Continue reading
                 cart.items.push({
                     eventId: selectedEvent.id,
                     title: selectedEvent.title,
+                    date: selectedEvent.date,
+                    time: selectedEvent.time,
                     price: selectedEvent.price,
                     quantity: quantity,
-                    imageUrl: selectedEvent.imageUrl
+                    imageUrl: selectedEvent.imageUrl,
+                    location: selectedEvent.location
                 });
             }
             updateCartIconCount();
@@ -741,7 +812,7 @@ Continue reading
                         //selectedEvent = events[0];
                         console.log(data);
                         selectedEvent = events.find(event => event.id === data);
-                        console.log(selectedEvent.id);
+                        console.log(selectedEvent.location);
                         document.getElementById("second").style.display = "";
                         document.getElementById("first").style.display = "none"; 
                         document.getElementById("third").style.display = "none";  
@@ -789,8 +860,20 @@ Continue reading
                         document.getElementById("fourth").style.display = "none";
                         document.getElementById("sixth").style.display = ""; 
                         //renderCheckoutReview();
-                        setTimeout(() => {form.submit(); cart.items.splice(0, cart.items.length);updateCartIconCount();}, 2000);
-                        break;                                                                                                                                 
+                        setTimeout(() => {form.submit(); cart.items.splice(0, cart.items.length);updateCartIconCount();navigateTo('seventh');}, 5000);
+                        break;   
+                    case 'seventh':
+                        //selectedEvent = events[0];
+                        document.getElementById("fifth").style.display = "none";
+                        document.getElementById("first").style.display = "none"; 
+                        document.getElementById("second").style.display = "none";  
+                        document.getElementById("third").style.display = "none";
+                        document.getElementById("fourth").style.display = "none";
+                        document.getElementById("sixth").style.display = "none";
+                        document.getElementById("seventh").style.display = ""; 
+                        //renderCheckoutReview();
+                        setTimeout(() => {location.reload();}, 5000);
+                        break;                                                                                                                                                       
                     case 'eventList':
                         document.getElementById("eventListPage").style.display = "";
                         document.getElementById("eventDetailPage").style.display = "none";   
@@ -904,14 +987,25 @@ Continue reading
                 cart.items.forEach(item => {
                     total += item.price * item.quantity;
                     const cartItemHtml = `
-                        <div class="flex flex-col sm:flex-row items-center bg-gray-50 rounded-lg p-4 shadow-sm">
-                            <img src="${item.imageUrl || 'https://placehold.co/100x70/a78bfa/ffffff?text=Ticket'}" alt="${item.title}" class="w-24 h-16 object-cover rounded-md mb-3 sm:mb-0 sm:mr-4">
-                            <div class="flex-grow">
-                                <h3 class="text-lg font-semibold text-gray-900">${item.title}</h3>
-                                <p class="text-gray-600">$${item.price.toFixed(2)} per ticket</p>
-                            </div>
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <!--<h2 class="card-title text-2xl font-semibold mb-3 text-gray-700">Event Details</h2>-->
+                <div class="row">
+                    <div class="col-md-2">
+                      <img src="${item.imageUrl || 'https://placehold.co/100x70/a78bfa/ffffff?text=Ticket'}" alt="${item.title}" width="170px" height="80px">
+                    </div>                  
+                    <div class="col-md-5">
+                        <p class="mb-1"><strong class="text-gray-600">Event Name:</strong> <span id="eventName">${item.title}</span></p>
+                        <p class="mb-1"><strong class="text-gray-600">Date:</strong> <span id="eventDate">${item.date}</span></p>
+                        <p class="text-gray-600"><strong class="text-gray-600">Price:</strong>$${item.price.toFixed(2)} per ticket</p>
+                    </div>
+                    <div class="col-md-5">
+                        <p class="mb-1"><strong class="text-gray-600">Location:</strong> <span id="eventLocation">${item.location}</span></p>
+                        <p class="mb-1"><strong class="text-gray-600">Time:</strong> <span id="eventTime">${item.time}</span></p>
+
   	                      <div class="row">                
-                            <div class="col-lg-2">
+                            <div class="col-lg-5">
                                       <div class="input-group">
                                         <span class="input-group-btn">
                                             <button data-event-id="${item.eventId}" data-action="decrement" id="minusquantity" type="button" class="quantity-button quantity-left-minus btn btn-light btn-number"  data-type="minus" data-field="">
@@ -932,8 +1026,13 @@ Continue reading
                                     </div>
                                     
                             </div>
-	                        </div>
-                        </div>
+	                        </div>                        
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
                         
                     `;
                     cartItemsContainer.insertAdjacentHTML('beforeend', cartItemHtml);
@@ -1117,14 +1216,32 @@ Continue reading
             cart.items.forEach(item => {
                 total += item.price * item.quantity;
                 const reviewItemHtml = `
-                    <div class="flex items-center bg-gray-50 rounded-lg p-4 shadow-sm">
-                        <img src="${item.imageUrl || 'https://placehold.co/80x50/a78bfa/ffffff?text=Ticket'}" alt="${item.title}" class="w-20 h-14 object-cover rounded-md mr-4">
-                        <div class="flex-grow">
-                            <h3 class="text-lg font-semibold text-gray-900">${item.title}</h3>
-                            <p class="text-gray-600">${item.quantity} x $${item.price.toFixed(2)}</p>
-                        </div>
-                        <span class="text-lg font-bold text-purple-700">$${(item.price * item.quantity).toFixed(2)}</span>
+
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <!--<h2 class="card-title text-2xl font-semibold mb-3 text-gray-700">Event Details</h2>-->
+                <div class="row">
+                    <div class="col-md-2">
+                      <img src="${item.imageUrl || 'https://placehold.co/100x70/a78bfa/ffffff?text=Ticket'}" alt="${item.title}" width="170px" height="80px">
+                    </div>                  
+                    <div class="col-md-5">
+                        <p class="mb-1"><strong class="text-gray-600">Event Name:</strong> <span id="eventName">${item.title}</span></p>
+                        <p class="mb-1"><strong class="text-gray-600">Date:</strong> <span id="eventDate">${item.date}</span></p>
+                        <p class="text-gray-600"><strong class="text-gray-600">Price:</strong>$${item.price.toFixed(2)} per ticket</p>
                     </div>
+                    <div class="col-md-5">
+                        <p class="mb-1"><strong class="text-gray-600">Location:</strong> <span id="eventLocation">${item.location}</span></p>
+                        <p class="mb-1"><strong class="text-gray-600">Time:</strong> <span id="eventTime">${item.time}</span></p>                     
+                        <p class="text-gray-600"><strong class="text-gray-600">Quantity:</strong>${item.quantity} x $${item.price.toFixed(2)} = <span class="text-lg font-bold text-purple-700">$${(item.price * item.quantity).toFixed(2)}</span></p>
+
+                    </div>
+                </div>
+            </div>
+        </div>                
+
+
+
                 `;
                 checkoutReviewItems.insertAdjacentHTML('beforeend', reviewItemHtml);
             });

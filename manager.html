@@ -65,79 +65,103 @@
   </nav>
 
   <div class="container py-5">
-    <h2 class="mb-4 text-center fw-bold">Create a New Event</h2>
 
-    <form id="eventForm">
-      <!-- Event Details -->
-      <div class="mb-3">
-        <label for="eventTitle" class="form-label">Event Title</label>
-        <input type="text" class="form-control" id="eventTitle" placeholder="Enter event name" required />
-      </div>
 
-      <div class="mb-3">
-        <label for="eventDescription" class="form-label">Description</label>
-        <textarea class="form-control" id="eventDescription" rows="4" placeholder="Describe your event" required></textarea>
-      </div>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Events</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Tickets</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Orders</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="disabled-tab" data-bs-toggle="tab" data-bs-target="#disabled-tab-pane" type="button" role="tab" aria-controls="disabled-tab-pane" aria-selected="false" disabled>Disabled</button>
+      </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+        <br/>
+        <h2 class="mb-4">Events</h2>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Title</th>
+              <!--<th scope="col">Description</th>-->
+              <th scope="col">Date</th>
+              <th scope="col">Time</th>
+              <th scope="col">Location</th>
+              <th scope="col">Price</th>
+              <th scope="col">Available Tickets</th>      
+              <th scope="col">Image</th>         
+            </tr>
+          </thead>
+          <tbody id="eventTables">
 
-      <!-- Date and Time -->
-      <div class="row g-3 mb-3">
-        <div class="col-md-6">
-          <label for="startDate" class="form-label">Start Date & Time</label>
-          <input type="datetime-local" class="form-control" id="startDate" required />
-        </div>
-        <div class="col-md-6">
-          <label for="endDate" class="form-label">End Date & Time</label>
-          <input type="datetime-local" class="form-control" id="endDate" required />
-        </div>
-      </div>
 
-      <!-- Location -->
-      <div class="mb-3">
-        <label for="location" class="form-label">Location</label>
-        <input type="text" class="form-control" id="location" placeholder="Venue or online link" required />
-      </div>
+          </tbody>
+        </table>        
 
-      <!-- Ticket Info -->
-      <div class="row g-3 mb-3">
-        <div class="col-md-6">
-          <label for="ticketType" class="form-label">Ticket Type</label>
-          <select class="form-select" id="ticketType" required>
-            <option value="">Select type</option>
-            <option value="free">Free</option>
-            <option value="paid">Paid</option>
-          </select>
-        </div>
-        <div class="col-md-6">
-          <label for="ticketPrice" class="form-label">Price (USD)</label>
-          <input type="number" class="form-control" id="ticketPrice" min="0" step="0.01" placeholder="e.g. 20.00" />
-        </div>
       </div>
+      <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+        <br/>
+        <h2 class="mb-4">Tickets</h2>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Title</th>
+              <!--<th scope="col">Description</th>-->
+              <th scope="col">Date</th>
+              <th scope="col">Time</th>
+              <th scope="col">Location</th>
+              <th scope="col">Price</th>
+              <th scope="col">Available Tickets</th>      
+              <th scope="col">Image</th>         
+            </tr>
+          </thead>
+          <tbody id="eventTickets">
 
-      <!-- Upload -->
-      <div class="mb-3">
-        <label for="eventImage" class="form-label">Event Image</label>
-        <input class="form-control" type="file" id="eventImage" />
-      </div>
 
-      <!-- Category -->
-      <div class="mb-3">
-        <label for="eventCategory" class="form-label">Category</label>
-        <select class="form-select" id="eventCategory" required>
-          <option value="">Select category</option>
-          <option value="music">Music</option>
-          <option value="business">Business</option>
-          <option value="sports">Sports</option>
-          <option value="tech">Tech</option>
-          <option value="art">Art</option>
-        </select>
-      </div>
+          </tbody>
+        </table>        
 
-      <!-- Submit -->
-      <div class="d-grid">
-        <button type="submit" class="btn btn-primary btn-lg">Create Event</button>
       </div>
-    </form>
+      <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+
+        <h2 class="mb-4">Orders</h2>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Title</th>
+              <!--<th scope="col">Description</th>-->
+              <th scope="col">Date</th>
+              <th scope="col">Time</th>
+              <th scope="col">Location</th>
+              <th scope="col">Price</th>
+              <th scope="col">Available Tickets</th>      
+              <th scope="col">Image</th>         
+            </tr>
+          </thead>
+          <tbody id="eventOrders">
+
+
+          </tbody>
+        </table>        
+
+      </div>
+      <div class="tab-pane fade" id="disabled-tab-pane" role="tabpanel" aria-labelledby="disabled-tab" tabindex="0">
+
+      </div>
+    </div>    
+
+
   </div>
+
 
   <footer class="bg-light text-center py-4 mt-5 border-top">
     <div class="container">
@@ -149,7 +173,7 @@
   <script type="module">
 
 
-
+/*
         const form = document.getElementById('eventForm'); //document.querySelector('form');
         //const thankYouMessage = document.querySelector('#thank-you-message');
         form.addEventListener('submit', (e) => {
@@ -192,10 +216,10 @@
                 description: eventDescription,
                 date: "2025-09-15",
                 time: "09:00 AM",
-                location: location,
-                price: ticketPrice,
+                location: "Medway",
+                price: 199.99,
                 availableTickets: 500,
-                imageUrl: eventImage
+                imageUrl: "slide_v4.png"
             };
             
   
@@ -217,6 +241,7 @@
           form.submit();
           
         });         
+*/
 
         window.onload = async function() {
 
@@ -229,6 +254,7 @@
           const ticketPrice = localStorage.getItem("ticketPrice");
           const eventImage = localStorage.getItem("eventImage");
           const eventCategory = localStorage.getItem("eventCategory");
+          const eventTable = document.getElementById('eventTables');//localStorage.getItem("eventTable");
 
           console.log(
             "eventTitle: - " + eventTitle + 
@@ -243,12 +269,32 @@
           );    
           
             var collectionString = localStorage.getItem('events');
-            var collection = JSON.parse(collectionString);                        
+            var collection = JSON.parse(collectionString);    
+            
+            eventTable.innerHTML = ''; 
 
            
-                        collection.forEach(event => {
-                          console.log("all events: - " + event.title);
-                        });     
+            collection.forEach(event => {
+
+                const eventCard = `
+                  <tr style="cursor:pointer;">
+                    <th scope="row">${event.id}</th>
+                    <td>${event.title}</td>
+                    <!--<td>The UK's biggest Comic Con returns to the Olympia London bringing you your favourite celebrities from TV & Film.</td>-->
+                    <td>${new Date(event.date).toLocaleDateString()}</td>
+                    <td>${event.time}</td>
+                    <td>${event.location}</td>
+                    <td>${event.price}</td>             
+                    <td>${event.availableTickets}</td>  
+                    <td><img src="${event.imageUrl}" width="40px" height="20px"></td> 
+                  </tr>
+                `;
+                eventTable.insertAdjacentHTML('beforeend', eventCard);                          
+
+                console.log("all events: - " + event.title);
+
+
+            });     
           
 
           //alert("enter!");
