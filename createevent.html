@@ -305,6 +305,9 @@
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
+            localStorage.setItem('email', email);
+            localStorage.setItem('password', password);
+
                 // Close the modal
                 const signInModal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
                 signInModal.hide();
@@ -361,10 +364,44 @@
             }
 */                
         }          
+        async function handleSignOut() {
+/*          
+            const { error } = await supabase.auth.signOut();
+            if (error) {
+                showMessage(`Sign out error: ${error.message}`, 'danger');
+            } else {
+                showMessage('Signed out successfully!', 'success');
+                updateAuthUI(null); // Update UI to logged-out state
+                showSection(eventListSection); // Go back to event list
+                fetchEvents(); // Re-fetch events
+            }
+*/
+            document.getElementById('userDropdown').classList.add('d-none');   
+            //document.getElementById('userDropdown').classList.add('d-none');
+            document.getElementById('loginItem').classList.remove('d-none'); 
+            document.getElementById('signUpItem').classList.remove('d-none'); 
+            localStorage.clear();                
+        }              
         signInForm.addEventListener('submit', handleSignIn);
-        signUpForm.addEventListener('submit', handleSignUp);        
+        signUpForm.addEventListener('submit', handleSignUp);
+        signOutLink.addEventListener('click', handleSignOut);        
 
         window.onload = async function() {
+
+          const email = localStorage.getItem("email");
+          const password = localStorage.getItem("password");  
+          if(email !== 'undefined'  && email !== null && password !== 'undefined'  && password !== null)
+          {
+                document.getElementById('userDropdown').classList.remove('d-none');   
+                document.getElementById('loginItem').classList.add('d-none'); 
+                document.getElementById('signUpItem').classList.add('d-none'); 
+          }
+          else {
+                document.getElementById('userDropdown').classList.add('d-none');   
+                //document.getElementById('userDropdown').classList.add('d-none');
+                document.getElementById('loginItem').classList.remove('d-none'); 
+                document.getElementById('signUpItem').classList.remove('d-none'); 
+          }      
 
           const eventTitle = localStorage.getItem("eventTitle");
           const eventDescription = localStorage.getItem("eventDescription");

@@ -673,7 +673,8 @@ Continue reading
         const proceedToCheckoutButton = document.getElementById('proceedToCheckoutButton');
 
         const signInForm = document.getElementById('signInForm');
-        const signUpForm = document.getElementById('signUpForm');        
+        const signUpForm = document.getElementById('signUpForm');      
+        const signOutLink = document.getElementById('signOutLink');  
 
         const form = document.getElementById('paymentForm'); //document.querySelector('form');
         //const thankYouMessage = document.querySelector('#thank-you-message');
@@ -795,6 +796,9 @@ Continue reading
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
+            localStorage.setItem('email', email);
+            localStorage.setItem('password', password);
+
                 // Close the modal
                 const signInModal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
                 signInModal.hide();
@@ -850,9 +854,28 @@ Continue reading
                 signUpForm.reset();
             }
 */                
-        }          
+        }    
+        async function handleSignOut() {
+/*          
+            const { error } = await supabase.auth.signOut();
+            if (error) {
+                showMessage(`Sign out error: ${error.message}`, 'danger');
+            } else {
+                showMessage('Signed out successfully!', 'success');
+                updateAuthUI(null); // Update UI to logged-out state
+                showSection(eventListSection); // Go back to event list
+                fetchEvents(); // Re-fetch events
+            }
+*/
+            document.getElementById('userDropdown').classList.add('d-none');   
+            //document.getElementById('userDropdown').classList.add('d-none');
+            document.getElementById('loginItem').classList.remove('d-none'); 
+            document.getElementById('signUpItem').classList.remove('d-none'); 
+            localStorage.clear();                
+        }              
         signInForm.addEventListener('submit', handleSignIn);
         signUpForm.addEventListener('submit', handleSignUp);
+        signOutLink.addEventListener('click', handleSignOut);
 
         //adminAddEventButton.addEventListener('click', addSampleEvent);
 
@@ -1428,6 +1451,22 @@ Continue reading
 
         // --- Initialization on Window Load ---
         window.onload = async function() {
+
+          const email = localStorage.getItem("email");
+          const password = localStorage.getItem("password");  
+          
+          if(email !== 'undefined'  && email !== null && password !== 'undefined'  && password !== null)
+          {
+                document.getElementById('userDropdown').classList.remove('d-none');   
+                document.getElementById('loginItem').classList.add('d-none'); 
+                document.getElementById('signUpItem').classList.add('d-none'); 
+          }
+          else {
+                document.getElementById('userDropdown').classList.add('d-none');   
+                //document.getElementById('userDropdown').classList.add('d-none');
+                document.getElementById('loginItem').classList.remove('d-none'); 
+                document.getElementById('signUpItem').classList.remove('d-none'); 
+          }
 
             updateCartIconCount();
             addSampleEvent();
