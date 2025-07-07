@@ -57,8 +57,21 @@
             </a>
           </li>  
 -->                             
-          <li class="nav-item"><a class="nav-link" href="login.html">Login In</a></li>
-          <li class="nav-item"><a class="nav-link" href="signup.html">Sign Up</a></li>
+          <li class="nav-item" id="loginItem"><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login In</a></li>
+          <li class="nav-item" id="signUpItem"><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#signUpModal">Sign Up</a></li>
+
+                    <li class="nav-item dropdown d-none" id="userDropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span id="userEmailDisplay">Profile</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#" id="createEventLink">Orders</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" id="signOutLink">Sign Out</a></li>
+                        </ul>
+                    </li>          
+
+
         </ul>
       </div>
     </div>
@@ -139,6 +152,71 @@
     </form>
   </div>
 
+
+<!-- Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Sign In</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+  <!-- Login Form -->
+
+      <form id="signInForm">
+        <div class="mb-3">
+          <label for="email" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="email" placeholder="name@example.com" required />
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password" placeholder="Enter your password" required />
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Sign In</button>
+
+      </form>
+
+      </div>
+    </div>
+  </div>
+</div>    
+
+<div class="modal fade" id="signUpModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Sign Up</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+  <!-- Sign Up Form -->
+
+      <form id="signUpForm">
+        <div class="mb-3">
+          <label for="email" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="signUpEmail" placeholder="name@example.com" required />
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="signUpPassword" placeholder="Enter your password" required />
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+
+      </form>        
+
+      </div>
+
+    </div>
+  </div>
+</div>   
+
   <footer class="bg-light text-center py-4 mt-5 border-top">
     <div class="container">
       <p class="mb-0">&copy; 2025 Boxing with Fern. All rights reserved.</p>
@@ -168,6 +246,9 @@
         const ticketPrice = document.getElementById('ticketPrice').value;
         const eventImage = document.getElementById('eventImage').value;
         const eventCategory = document.getElementById('eventCategory').value; 
+
+        const signInForm = document.getElementById('signInForm');
+        const signUpForm = document.getElementById('signUpForm');         
 
         localStorage.setItem("eventTitle", eventTitle);
         localStorage.setItem("eventDescription", eventDescription);
@@ -216,7 +297,72 @@
           );
           form.submit();
           
-        });         
+        });     
+        
+        
+        async function handleSignIn(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+                // Close the modal
+                const signInModal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+                signInModal.hide();
+                signInForm.reset(); 
+                //document.getElementById('userDropdown').style.display = 'none';    
+                document.getElementById('userDropdown').classList.remove('d-none');   
+                //document.getElementById('userDropdown').classList.add('d-none');
+                document.getElementById('loginItem').classList.add('d-none'); 
+                document.getElementById('signUpItem').classList.add('d-none');   
+
+            //alert("fetch!");
+
+/*            
+
+            const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+
+            if (error) {
+                showMessage(`Sign in error: ${error.message}`, 'danger');
+            } else {
+                showMessage('Signed in successfully!', 'success');
+                // Close the modal
+                const signInModal = bootstrap.Modal.getInstance(document.getElementById('signInModal'));
+                signInModal.hide();
+                signInForm.reset();
+                updateAuthUI(data.user); // Update UI based on signed-in user
+                showSection(eventListSection); // Go back to event list
+                fetchEvents(); // Re-fetch events in case of user-specific data
+            }
+*/                
+        }      
+        async function handleSignUp(e) {
+            e.preventDefault();
+            const email = document.getElementById('signUpEmail').value;
+            const password = document.getElementById('signUpPassword').value;
+
+                // Close the modal
+                const signUpModal = bootstrap.Modal.getInstance(document.getElementById('signUpModal'));
+                signUpModal.hide();
+                signUpForm.reset();  
+                
+                
+
+/*            
+            const { data, error } = await supabase.auth.signUp({ email, password });
+
+            if (error) {
+                showMessage(`Sign up error: ${error.message}`, 'danger');
+            } else {
+                showMessage('Sign up successful! Please check your email to confirm.', 'success');
+                // Close the modal
+                const signUpModal = bootstrap.Modal.getInstance(document.getElementById('signUpModal'));
+                signUpModal.hide();
+                signUpForm.reset();
+            }
+*/                
+        }          
+        signInForm.addEventListener('submit', handleSignIn);
+        signUpForm.addEventListener('submit', handleSignUp);        
 
         window.onload = async function() {
 
